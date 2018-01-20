@@ -9,7 +9,9 @@ html
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
-
+    link(rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css")
+    script(src='/js/lib/jquery-3.1.1.min.js')
+    script(src='/js/lib/bootstrap.min.js')
   body
     include partials/header
 
@@ -18,9 +20,9 @@ html
       block content
 
     include partials/footer
-
-    script(src='/js/lib/jquery-3.1.1.min.js')
-    script(src='/js/lib/bootstrap.min.js')
+    
+    
+    
     script(src='/js/main.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID

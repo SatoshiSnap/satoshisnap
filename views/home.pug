@@ -25,3 +25,31 @@ block content
       p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
       p
         a.btn.btn-default(href='#', role='button') View details »
+
+      // play from here
+      div(class="container-fluid")
+        div(class="row")
+          div(class="col-md-8" id="affdex_elements" style="width:680px;height:480px; display:none;")
+          div(class="col-md-4")
+            div( style="height:25em;")
+              strong EMOTION TRACKING RESULTS
+              div( id="results" style="word-wrap:break-word;")
+            
+            div
+              strong DETECTOR LOG MSGS
+            
+            div(id="logs")
+          
+        
+        div
+          button(id="start" onclick="onStart()") Play
+          button(id="stop" onclick="onStop()") Stop
+          button( id="reset" onclick="onReset()") Reset
+
+            
+      // JS below
+      script( type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js")
+      script( type='text/javascript' src="/js/affectiva.js") 
+        
+
+       
