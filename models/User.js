@@ -19,10 +19,16 @@ const userSchema = new mongoose.Schema({
 
   profile: {
     name: String,
-    gender: String,
-    location: String,
-    website: String,
-    picture: String
+    picture: String,
+    balance: {
+      type: Number,
+      default: 0
+    },
+    todayPoints: {
+      type: Number,
+      default: 0
+    },
+    lastPointTime: Date
   }
 }, { timestamps: true });
 
