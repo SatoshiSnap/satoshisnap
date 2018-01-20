@@ -34,6 +34,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const playController = require('./controllers/play');
 
 /**
  * API keys and Passport configuration.
@@ -216,6 +217,13 @@ app.get('/auth/pinterest', passport.authorize('pinterest', { scope: 'read_public
 app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/api/pinterest');
 });
+
+/**
+ * Custom routes
+ */
+app.route('/play')
+  .all(passportConfig.isAuthenticated)
+  .get(playController.index)
 
 /**
  * Error Handler.

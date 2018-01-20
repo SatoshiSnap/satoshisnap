@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     lastPointTime: Date
   }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 /**
  * Password hash middleware.
