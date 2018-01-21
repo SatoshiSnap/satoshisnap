@@ -33,12 +33,14 @@ block content
       label.col-sm-3.control-label(for='todayPoints') Earned Today
       .col-sm-7
         span(id='todayPoints', name='todayPoints', style='display: inline-block; padding-top: 9px;')
-          =user.profile.todayPoints
+          =user.profile.todayPoints 
+          | &nbsp;Satoshis
     .form-group
       label.col-sm-3.control-label(for='balance') Total Balance
       .col-sm-7
         span.align-text-bottom(id='balance', name='balance', style='display: inline-block; padding-top: 9px;')
           =user.profile.balance 
+          | &nbsp;Satoshis
 
     
   form.form-horizontal(action = '/account/withdraw', method='post')
