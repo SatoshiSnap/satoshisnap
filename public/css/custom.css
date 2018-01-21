@@ -60,3 +60,16 @@ a {
 .form-control {
   border: 0px solid #ccc;
 }
+
+.logo {
+  background-image: url('./images/satoshisnaplogo.png'); 
+  background-size: 100% 100%;
+  width: 40px;
+  height: 40px;
+
+}
+
+ul.no-decoration {
+  list-style: none;
+  padding-left: 0;
+}

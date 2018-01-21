@@ -43,19 +43,14 @@ function onPlayerReady(event) {
 var done = false;
 
 function onPlayerStateChange(event) {
-  // console.log(event.data)
-  if (event.data == YT.PlayerState.PLAYING) {
-    document.getElementById('startButton').style.zIndex = '-1';
-  } else if (event.data == YT.PlayerState.PAUSED) {
-    document.getElementById('startButton').style.zIndex = '1000';
-  }
-
-
+  // WINNING
+  // WINNING // WINNING // WINNING // WINNING// WINNING // WINNING // WINNING // WINNING
 
   if (event.data == YT.PlayerState.ENDED && !lost && faceDec === true) {
     var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/play/';
     var data = {};
-
+    document.getElementById('startButton').style.zIndex = '1000';
+    document.getElementById('playStatus').innerHTML = "Congrats you won 210 Satoshis! Click to play again";
     $.ajax({
       type: 'POST',
       beforeSend: function(xhr) {
@@ -63,11 +58,20 @@ function onPlayerStateChange(event) {
       },
       data: JSON.stringify(data),
       contentType: 'application/json',
-        url: url,						
+        url: url,           
           success: function(data) {
             console.log('success');
           }
     });
+    player.stopVideo();
+  }
+  
+  if (event.data == YT.PlayerState.PLAYING) {
+    console.log('playing video')
+    document.getElementById('startButton').style.zIndex = '-1';
+  } 
+  else if (event.data == YT.PlayerState.PAUSED) {
+    document.getElementById('startButton').style.zIndex = '1000';
   }
 }
 
@@ -78,6 +82,7 @@ function playVideo() {
     detector.start();
     document.getElementById('playStatus').innerHTML = "Satoshi Snap node needs to sync. Please wait...";
   } else if (detector && detector.isRunning) {
+    
     player.nextVideo();
     attnCounter = 0;
     eyeCounter = 0;
@@ -99,6 +104,7 @@ function playerLost() {
 }
 
 function retryWebcamAccess() {
+  document.getElementById('startButton').style.display = 'block';
   document.getElementById('startButton').style.zIndex = '1000';
   document.getElementById('playStatus').innerHTML = "Satoshi Snap needs access to your webcam. Please refresh the page and try again.";
 }
@@ -242,7 +248,7 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
                 attnCounter = 0;
             }
             if (eyeCounter > 50) {
-                alert('OPEN YOUR EYES!!!!!');
+                alert('OPEN YOUR EYES!!!');
                 eyeCounter = 0;
             }
         }

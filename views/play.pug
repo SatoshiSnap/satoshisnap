@@ -2,9 +2,9 @@ extends layout
 
 block content
   .row
-    .col-xs-6.col-xs-offset-3.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(style='max-width: 640px; max-height: 390px; padding-bottom: 32%; min-width: 320px; min-height: 195px; margin-top: 30px')
+    .col-xs-6.col-xs-offset-3.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(style='max-width: 640px; max-height: 390px; padding-bottom: 32%; min-width: 320px; min-height: 195px;')
       
-      iframe(id='player', src='https://www.youtube.com/embed/videoseries?list=PLAlosoTOSU3zHRLG67G8h6BAVxp62Y6Za&enablejsapi=1&rel=0&controls=0&showinfo=0&autoplay=0', frameborder='0', allow='encrypted-media', allowfullscreen='false', style='position:absolute; top:0; left:0; width: 100%; height:100%;')
+      iframe(id='player', src='https://www.youtube.com/embed/videoseries?list=PLAlosoTOSU3zHRLG67G8h6BAVxp62Y6Za&enablejsapi=1&rel=0&controls=0&showinfo=0&autoplay=0&loop=1', frameborder='0', allow='encrypted-media', allowfullscreen='false', style='position:absolute; top:0; left:0; width: 100%; height:100%;')
 
       #startButton(role='button', onClick='playVideo()', style='position:absolute; top:0; left:0; width: 100%; height:100%; vertical-align: middle; text-align: center; z-index: 1000; background-color: #9F27AD;')
 
