@@ -1,0 +1,33 @@
+.play-button, .play-button:hover, .play-button:focus {
+width: 100%;
+max-width: 350px;
+margin-top: 13px;
+margin-bottom: 20px;
+margin-left: auto;
+margin-right: auto;
+height: 50px;
+color: #FFF;
+background-color: #359F35;
+border: 1px solid #359F35;
+border-radius: 10px;
+box-shadow: 0px 6px 0px #338633;
+font-size: 1.25em;
+font-family: Verdana,sans-serif;
+top: 0px;
+position: relative;
+display: inline-block;
+padding: 12px 12px 6px 12px;
+font-weight: 400;
+line-height: 1.428571429;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+cursor: pointer;
+background-image: none;
+text-decoration: none;
+}
+
+.play-button:active{
+box-shadow:0 0px 0 #338633;
+top:6px
+}
