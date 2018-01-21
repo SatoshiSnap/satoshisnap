@@ -2,6 +2,8 @@ const bluebird = require('bluebird');
 const crypto = bluebird.promisifyAll(require('crypto'));
 const nodemailer = require('nodemailer');
 const passport = require('passport');
+const bitcore = require('bitcore-lib');
+const Insight = require('bitcore-explorers').Insight;
 const User = require('../models/User');
 
 /**
@@ -154,7 +156,99 @@ exports.postUpdateProfile = (req, res, next) => {
     });
   });
 };
+/**
+ * POST /play
+ * Update satoshi balance
+ */
+exports.postPoints = (req, res, next) => {
+  User.findById(req.user.id, (err, user) => {
+    if (err) { return next(err); }
+    user.profile.balance += 10000;
+    user.profile.todayPoints += 10000;
+    user.profile.lastPointTime = new Date().toUTCString();
+    user.save((err) => {
+      if (err) {
+        return next(err);
+      }
+      req.flash('success', { msg: 'User balance = ' + user.profile.balance });
+    });
+  });
+};
 
+/**
+ * POST /account/withdraw
+ * Update profile balance
+ */
+exports.transaction = (req, res, next) => {
+  console.log(req.body.walletaddress);
+  
+  let address2 = req.body.walletaddress;
+  
+  //Custom validator since I couldnt get req.assert to work
+  if (address2.length < 26){
+    req.flash('errors', { msg: 'Please enter a valid wallet address.' });
+    return res.redirect('/account');
+  }
+
+  User.findById(req.user.id, (err, user) => {
+    if (err) { return next(err); }
+    let amountSent = user.profile.balance;
+    
+    //Custom validator since I couldnt get req.assert to work
+    if (amountSent <= 0){
+      req.flash('errors', { msg: 'Cannot withdraw from 0 balance.' });
+      return res.redirect('/account');
+    }
+
+    let privateKeyWIF = 'cW71rTqCqWoUcFcCuETwniDsiqf1Ecx1x3Qc6QnGPV5Z5mPcPka3';
+    let privateKey = bitcore.PrivateKey.fromWIF(privateKeyWIF);
+    let address = privateKey.toAddress(); // our address
+
+    let insight = new Insight('testnet');
+    insight.getUnspentUtxos(address, (err, utxos) => {
+       if(err){
+         //Handle errors
+         return err;
+       }else {
+         // use the UTXOs to create transaction
+         console.log(utxos);
+         var tx = bitcore.Transaction();
+         tx.from(utxos);
+         tx.to(address2,amountSent); // Withdraw ammount here
+         tx.change(address); //change goes back to old address
+         tx.fee(50000);
+         tx.sign(privateKey);
+
+         //console.log('transaction:');
+         //console.log(tx.toObject());
+         tx.serialize();
+
+         //Scripting Print
+         //var scriptIn = bitcore.Script(tx.toObject().inputs[0].script);
+         //console.log('input script string: ');
+         //console.log(scriptIn.toString());
+         //var scriptOut = bitcore.Script(tx.toObject().outputs[0].script);
+         //console.log('output script string: ')
+         //console.log(scriptOut.toString());
+         //tx.addData()
+         insight.broadcast(tx.toString(), function(err, returnedTxId) { //sends the transaction
+           if(err){ 
+             return err;
+           }else{
+             //Mark the transaction as broadcasted
+             console.log('sucessful broadcast: ' + returnedTxId);
+           }
+         });
+       }
+     });
+    user.profile.balance = 0;// amount to give in satoshi
+    user.save((err) => {
+      if (err) { return next(err); }
+      req.flash('success', { msg: 'Your Satoshis have been sent!' });
+      res.redirect('/account');
+    });
+  });
+};
 /**
  * POST /account/password
  * Update current password.

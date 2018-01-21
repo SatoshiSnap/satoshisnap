@@ -37,10 +37,24 @@ function onPlayerStateChange(event) {
   } else if (event.data == YT.PlayerState.PAUSED) {
     document.getElementById('startButton').style.zIndex = '1000';
   }
+
+
   if (event.data == YT.PlayerState.ENDED && !lost) {
-    user.profile.balance += 100;
-    user.profile.todayPoints += 100;
-    user.profile.lastPointTime = new Date().toUTCString();
+    var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/play/';
+    var data = {};
+
+    $.ajax({
+      type: 'POST',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      },
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+        url: url,						
+          success: function(data) {
+            console.log('success');
+          }
+    });
   }
 }
 
@@ -51,6 +65,7 @@ function playVideo() {
     detector.start();
     document.getElementById('playStatus').innerHTML = "Initializing Face Detector...";
   }
+
 }
 
 function stopVideo() {

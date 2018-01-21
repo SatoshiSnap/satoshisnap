@@ -61,7 +61,7 @@ mongoose.connection.on('error', (err) => {
  * Express configuration.
  */
 app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3003);
+app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3004);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(expressStatusMonitor());
@@ -137,7 +137,8 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-
+// bitcoin transaction
+app.post('/account/withdraw', userController.transaction);
 /**
  * API examples routes.
  */
@@ -225,7 +226,7 @@ app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRed
 app.route('/play')
   .all(passportConfig.isAuthenticated)
   .get(playController.index)
-  // .post(playController.postPoints)
+  .post(userController.postPoints)
 /**
  * Error Handler.
  */
