@@ -1,20 +1,20 @@
 extends layout
 
 block content
-  .row
+  .row.home-header
     .col-xs-6.col-xs-offset-3.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(style='max-width: 640px; max-height: 390px; padding-bottom: 32%; min-width: 320px; min-height: 195px; margin-top: 30px')
       
       #startButton(style='position:absolute; top:0; left:0; width: 100%; height:100%; vertical-align: middle; text-align: center; z-index: 1000; background-color: #9F27AD;')
 
         img(src='/images/logo.png', style='display: block; width: 80%; margin-top: 12%; margin-left: auto; margin-right:auto')
 
-        span(style='display: block; margin-left: auto; margin-right:auto; color: #fff; font-size: 18px;') Click to Play
+        a.play-button(href='/play', role='button', style='color: #fff !important;') Play Now!
   .row
-      // play from here
-      div(class="container-fluid")
-        div(class="row", style='text-align:center;')
-          img(src='/images/instructions.png', style='width:40%;')
-          .col-xs-6.col-xs-offset-3.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
-            | how to win
-      
+    .col-sm-6
+      h2 How to Play
+      ul 
+        li Watch funny videos
+        li Try not to laugh
+        li Earn Bitcoin!
+
 

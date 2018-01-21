@@ -1,12 +1,12 @@
 {
-  "name": "hackathon-starter",
+  "name": "satoshisnap",
   "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
+  "description": "The repository for Satoshi Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/satoshisnap/satoshisnap.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "Satoshi Snap Team",
   "license": "MIT",
   "scripts": {
     "start": "node app.js",

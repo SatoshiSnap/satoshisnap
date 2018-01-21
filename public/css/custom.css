@@ -3,6 +3,10 @@ body {
     color:white !important;
 }
 
+.home-header {
+  background-color:#9F28AD;
+}
+
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #f7931a;
     background-color: transparent;
@@ -17,3 +21,42 @@ a {
       outline: thin dotted;
       outline: 5px auto -webkit-focus-ring-color;
       outline-offset: -2px; }
+
+.play-button, .play-button:hover, .play-button:focus {
+  width: 100%;
+  max-width: 350px;
+  margin-top: 13px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 50px;
+  color: #FFF;
+  background-color: #f7931a;
+  border: 1px solid #f7931a;
+  border-radius: 10px;
+  box-shadow: 0px 6px 0px #c27416;
+  font-size: 1.25em;
+  font-family: Verdana,sans-serif;
+  top: 0px;
+  position: relative;
+  display: inline-block;
+  padding: 12px 12px 6px 12px;
+  font-weight: 400;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  text-decoration: none;
+}
+
+.play-button:active{
+  box-shadow:0 0px 0 #c27416;
+  color: #FFF !important;
+  top:6px
+}
+
+.form-control {
+  border: 0px solid #ccc;
+}
