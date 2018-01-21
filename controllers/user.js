@@ -2,6 +2,8 @@ const bluebird = require('bluebird');
 const crypto = bluebird.promisifyAll(require('crypto'));
 const nodemailer = require('nodemailer');
 const passport = require('passport');
+const bitcore = require('bitcore-lib');
+const Insight = require('bitcore-explorers').Insight;
 const User = require('../models/User');
 
 /**
@@ -154,7 +156,64 @@ exports.postUpdateProfile = (req, res, next) => {
     });
   });
 };
+/**
+ * POST /account/withdraw
+ * Update profile information.
+ */
+ exports.transaction = (req, res, next) => {
+   // console.log(req.body.walletaddress);
+   var address2 = req.body.walletaddress;
+   User.findById(req.user.id,(err, user)=>{
+     if (err){ return next(err);}
+     var amountSent = user.profile.balance;
+     console.log(user.profile.balance);
 
+     var privateKeyWIF = 'cW71rTqCqWoUcFcCuETwniDsiqf1Ecx1x3Qc6QnGPV5Z5mPcPka3';
+     var privateKey = bitcore.PrivateKey.fromWIF(privateKeyWIF);
+     var address = privateKey.toAddress(); // our address
+
+     var insight = new Insight('testnet');
+     insight.getUnspentUtxos(address, function(err, utxos){
+       if(err){
+         //Handle errors
+         return err;
+       }else {
+         // use the UTXOs to create transaction
+         console.log(utxos);
+         var tx = bitcore.Transaction();
+         tx.from(utxos);
+         tx.to(address2,amountSent); // Withdraw ammount here
+         tx.change(address); //change goes back to old address
+         tx.fee(50000);
+         tx.sign(privateKey);
+
+         //console.log('transaction:');
+         //console.log(tx.toObject());
+         tx.serialize();
+
+         //Scripting Print
+         //var scriptIn = bitcore.Script(tx.toObject().inputs[0].script);
+         //console.log('input script string: ');
+         //console.log(scriptIn.toString());
+         //var scriptOut = bitcore.Script(tx.toObject().outputs[0].script);
+         //console.log('output script string: ')
+         //console.log(scriptOut.toString());
+
+         //tx.addData()
+         insight.broadcast(tx, function(err,returnedTxId){ //sends the transaction
+           if(err){
+             //Handle errors
+           }else{
+             //Mark the transaction as broadcasted
+             console.log('sucessful broadcast: ' + returnedTxId);
+           }
+         });
+       }
+     });
+     user.profile.balance = 0;//amount to give in satoshi
+   });
+   res.redirect('/account');
+ };
 /**
  * POST /account/password
  * Update current password.

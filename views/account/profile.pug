@@ -28,8 +28,36 @@ block content
     span
       .pointsTotal Total Points
         span=user.profile.todayPoints
-
-
+  
+  
+  
+  
+  .page-header
+      h3 Account Balance
+  
+  form.form-horizontal(action='/account/Balance', method='POST')
+        .form-group      
+    
+        p.col-sm-offset-3.col-sm-4 Today's Points:
+          span=user.profile.todayPoints
+        
+        p.col-sm-offset-3.col-sm-4 Time of Last Win:
+            span=user.profile.lastPointTime
+        
+        p.col-sm-offset-3.col-sm-4 Total Balance:
+          span=user.profile.balance 
+    
+  form.form-horizontal(action = '/account/withdraw', method='post')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='walletaddress') Wallet Address
+      .col-sm-7
+        input.form-control(type='text', name='walletaddress', id='publickey', placeholder='Public Key Address Here')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn-primary(type='submit')
+          | Withdraw Balance
+  
   .page-header
     h3 Change Password
 
@@ -60,6 +88,8 @@ block content
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
           | Delete my account
+      
+    
 
   .page-header
     h3 Linked Accounts
