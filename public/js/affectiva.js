@@ -10,7 +10,7 @@ tag.src = 'https://www.youtube.com/iframe_api';
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-
+var faceDec = false;
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
@@ -43,7 +43,7 @@ function onPlayerReady(event) {
 var done = false;
 
 function onPlayerStateChange(event) {
-  console.log(event.data)
+  // console.log(event.data)
   if (event.data == YT.PlayerState.PLAYING) {
     document.getElementById('startButton').style.zIndex = '-1';
   } else if (event.data == YT.PlayerState.PAUSED) {
@@ -51,7 +51,8 @@ function onPlayerStateChange(event) {
   }
 
 
-  if (event.data == YT.PlayerState.ENDED && !lost) {
+
+  if (event.data == YT.PlayerState.ENDED && !lost && faceDec === true) {
     var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/play/';
     var data = {};
 
@@ -193,13 +194,14 @@ detector.addEventListener('onStopSuccess', () => {
 detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
         
         if (lost) {
-            return;
+          player.stopVideo(); // next video
+          return;
         }
         // MAGIC HAPPENS HERE
         var joy = null;
         var attention = null;
         var eyeClosure = null;
-        var faceDec = false;
+        
 
         var joyAlert = false;
 

@@ -1,44 +1,28 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
-  hr
   .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+    .col-xs-6.col-xs-offset-3.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(style='max-width: 640px; max-height: 390px; padding-bottom: 32%; min-width: 320px; min-height: 195px; margin-top: 30px')
+      
+      #startButton(style='position:absolute; top:0; left:0; width: 100%; height:100%; vertical-align: middle; text-align: center; z-index: 1000; background-color: #9F27AD;')
 
+        img(src='/images/logo.png', style='display: block; width: 80%; margin-top: 12%; margin-left: auto; margin-right:auto')
+
+        span(style='display: block; margin-left: auto; margin-right:auto; color: #fff; font-size: 18px;') Click to Play
+  .row
       // play from here
       div(class="container-fluid")
         div(class="row")
           div(class="col-md-8" id="affdex_elements" style="width:680px;height:480px; display:none;")
           div(class="col-md-4")
             div( style="height:25em;")
-              strong EMOTION TRACKING RESULTS
+              
               div( id="results" style="word-wrap:break-word;")
             
             div
-              strong DETECTOR LOG MSGS
+              
             
-            div(id="logs")
+            
           
         
         div
@@ -47,9 +31,8 @@ block content
           button( id="reset" onclick="onReset()") Reset
 
             
-      // JS below
-      script( type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js")
-      script( type='text/javascript' src="/js/affectiva.js") 
-        
+  // JS below
+  script( type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js")
+  script( type='text/javascript' src="/js/affectiva.js") 
+      
 
-       

@@ -1,0 +1,18 @@
+body {
+    background-color:#9F28AD;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #f7931a;
+    background-color: transparent;
+}
+a {
+    color: #f7931a !important;
+    text-decoration: none; }
+    a:hover, a:focus {
+      color: #f7931a !important;
+      text-decoration: underline; }
+    a:focus {
+      outline: thin dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px; }
