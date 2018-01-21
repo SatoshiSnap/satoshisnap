@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "bitcore-explorers": "^1.0.1",
+    "bitcore-lib": "^0.15.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "chalk": "^2.1.0",

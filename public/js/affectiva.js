@@ -10,8 +10,6 @@ tag.src = 'https://www.youtube.com/iframe_api';
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-console.log(req.user);
-
 
 var player;
 function onYouTubeIframeAPIReady() {
@@ -51,6 +49,25 @@ function onPlayerStateChange(event) {
   } else if (event.data == YT.PlayerState.PAUSED) {
     document.getElementById('startButton').style.zIndex = '1000';
   }
+
+
+  if (event.data == YT.PlayerState.ENDED && !lost) {
+    var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/play/';
+    var data = {};
+
+    $.ajax({
+      type: 'POST',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      },
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+        url: url,						
+          success: function(data) {
+            console.log('success');
+          }
+    });
+  }
 }
 
 function playVideo() {
@@ -66,6 +83,7 @@ function playVideo() {
     lost = false;
     firstPlay = true;
   }
+
 }
 
 function playerLost() {
@@ -187,7 +205,7 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
 
         if (firstPlay) {
           player.playVideo();
-          firstPlay = false
+          firstPlay = false;
         }
 
         if (faces.length === 1) {
@@ -203,7 +221,7 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
                 playerLost();
             } 
             if (attention < 40) {
-                attnCounter += 1;          
+                attnCounter += 1;
                 // setInterval(console.log('attnCounter' + attnCounter), 50000);
             }
             else if (attention > 41) {

@@ -3,7 +3,7 @@
  * Play page.
  */
 exports.index = (req, res) => {
-  res.render('play', {
-    title: 'Play'
-  });
+    res.render('play', {
+      title: 'Play'
+    });
 };

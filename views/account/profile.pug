@@ -24,12 +24,34 @@ block content
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Profile
-  p
-    span
-      .pointsTotal Total Points
-        span=user.profile.todayPoints
+  
+  .page-header
+      h3 Account Balance
+  
+  form.form-horizontal(action='/account/Balance', method='POST')
+    .form-group      
+      label.col-sm-3.control-label(for='todayPoints') Earned Today
+      .col-sm-7
+        span(id='todayPoints', name='todayPoints', style='display: inline-block; padding-top: 9px;')
+          =user.profile.todayPoints
+    .form-group
+      label.col-sm-3.control-label(for='balance') Total Balance
+      .col-sm-7
+        span.align-text-bottom(id='balance', name='balance', style='display: inline-block; padding-top: 9px;')
+          =user.profile.balance 
 
-
+    
+  form.form-horizontal(action = '/account/withdraw', method='post')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='walletaddress') Wallet Address
+      .col-sm-7
+        input.form-control(type='text', name='walletaddress', id='publickey', placeholder='Public Key Address Here')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn-primary(type='submit')
+          | Withdraw Balance
+  
   .page-header
     h3 Change Password
 
@@ -60,6 +82,8 @@ block content
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
           | Delete my account
+      
+    
 
   .page-header
     h3 Linked Accounts
