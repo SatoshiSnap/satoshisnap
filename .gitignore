@@ -20,7 +20,6 @@ public/css/main.css
 .env
 
 # Dependency directory
-node_modules
 bower_components
 
 # Editors
