@@ -1,9 +1,16 @@
+var attnCounter = 0;
+var eyeCounter = 0;
+var lost = false;
+var firstPlay = true;
+
 var tag = document.createElement('script');
 tag.id = 'iframe-demo';
 tag.src = 'https://www.youtube.com/iframe_api';
 
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+console.log(req.user);
 
 
 var player;
@@ -15,6 +22,13 @@ function onYouTubeIframeAPIReady() {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
     }
+    // playerVars: {
+    //   'autoplay': 0, 
+    //   'controls': 0,
+    //   'showinfo': 0,
+    //   'listType': 'playlist',
+    //   'list': '<YOURPLAYLISTID>'
+    // }
   });
 }
 
@@ -31,7 +45,7 @@ function onPlayerReady(event) {
 var done = false;
 
 function onPlayerStateChange(event) {
-
+  console.log(event.data)
   if (event.data == YT.PlayerState.PLAYING) {
     document.getElementById('startButton').style.zIndex = '-1';
   } else if (event.data == YT.PlayerState.PAUSED) {
@@ -44,12 +58,30 @@ function playVideo() {
  if (detector && !detector.isRunning) {
     $('#logs').html('');
     detector.start();
-    document.getElementById('playStatus').innerHTML = "Initializing Face Detector...";
+    document.getElementById('playStatus').innerHTML = "Satoshi Snap node needs to sync. Please wait...";
+  } else if (detector && detector.isRunning) {
+    player.nextVideo();
+    attnCounter = 0;
+    eyeCounter = 0;
+    lost = false;
+    firstPlay = true;
   }
 }
 
-function stopVideo() {
+function playerLost() {
   player.stopVideo();
+  document.getElementById('startButton').style.zIndex = '1000';
+  document.getElementById('playStatus').innerHTML = "You smiled! Click to play again.";
+
+  // if (detector && detector.isRunning) {
+  //   detector.removeEventListener();
+  //   detector.stop();
+  // }
+}
+
+function retryWebcamAccess() {
+  document.getElementById('startButton').style.zIndex = '1000';
+  document.getElementById('playStatus').innerHTML = "Satoshi Snap needs access to your webcam. Please refresh the page and try again.";
 }
 
 
@@ -128,6 +160,7 @@ function onStop() {
 detector.addEventListener('onWebcamConnectFailure', () => {
         log('#logs', "webcam denied");
         console.log("Webcam access denied");
+        retryWebcamAccess();
       });
 
 // Add a callback to notify when detector is stopped
@@ -135,11 +168,6 @@ detector.addEventListener('onStopSuccess', () => {
         log('#logs', "The detector reports stopped");
         $("#results").html("");
       });
-
-var attnCounter = 0;
-var eyeCounter = 0;
-var lost = false;
-var firstPlay = true;
 
 // Add a callback to receive the results from processing an image.
 // The faces object contains the list of the faces detected in an image.
@@ -170,11 +198,9 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
             eyeClosure = faces[0].expressions.eyeClosure;
 
             if (joy > 50) {
-                console.log(joy);
                 lost = true;
-                alert('haha, Maybe next time!');
                 joy = 0;
-                detector.stop();
+                playerLost();
             } 
             if (attention < 40) {
                 attnCounter += 1;          
