@@ -37,6 +37,11 @@ function onPlayerStateChange(event) {
   } else if (event.data == YT.PlayerState.PAUSED) {
     document.getElementById('startButton').style.zIndex = '1000';
   }
+  if (event.data == YT.PlayerState.ENDED && !lost) {
+    user.profile.balance += 100;
+    user.profile.todayPoints += 100;
+    user.profile.lastPointTime = new Date().toUTCString();
+  }
 }
 
 function playVideo() {
@@ -159,7 +164,7 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
 
         if (firstPlay) {
           player.playVideo();
-          firstPlay = false
+          firstPlay = false;
         }
 
         if (faces.length === 1) {
@@ -177,7 +182,7 @@ detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => 
                 detector.stop();
             } 
             if (attention < 40) {
-                attnCounter += 1;          
+                attnCounter += 1;
                 // setInterval(console.log('attnCounter' + attnCounter), 50000);
             }
             else if (attention > 41) {

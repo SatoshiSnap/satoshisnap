@@ -137,6 +137,7 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+
 /**
  * API examples routes.
  */
@@ -224,7 +225,7 @@ app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRed
 app.route('/play')
   .all(passportConfig.isAuthenticated)
   .get(playController.index)
-
+  // .post(playController.postPoints)
 /**
  * Error Handler.
  */
